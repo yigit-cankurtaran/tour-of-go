@@ -10,6 +10,7 @@ func pow(x, n, lim float64) float64 {
 		return v
 	} else {
 		fmt.Printf("%g >= %g\n", v, lim)
+		// the g in here stands for general
 	}
 	return lim
 }
