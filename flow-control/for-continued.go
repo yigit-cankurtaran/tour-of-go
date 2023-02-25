@@ -8,6 +8,7 @@ func main() {
 		sum += sum
 		// the init and post statements are omitted
 		// the code still works properly
+		// for in go works similar to while in other languages
 	}
 	fmt.Println(sum)
 }
