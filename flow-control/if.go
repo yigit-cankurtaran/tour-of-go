@@ -5,13 +5,13 @@ import (
 	"math"
 )
 
-func Sqrt(x float64) float64 {
+func sqrt(x float64) string {
 	if x < 0 {
-		return "math.Sqrt(-x) + 'i'"
+		return sqrt(-x) + "i"
 	}
 	return fmt.Sprint(math.Sqrt(x))
 }
 
 func main() {
-	fmt.Println(Sqrt(2), Sqrt(-4))
+	fmt.Println(sqrt(2), sqrt(-4))
 }
