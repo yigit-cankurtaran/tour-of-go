@@ -22,7 +22,9 @@ func main() {
 	// wc := WordCount("hello world hello")
 	// fmt.Println(wc)
 	// prints map[hello:2 world:1]
-	wc.Test(WordCount)
+	// wc.Test(WordCount)
+	// returns an error normally because local file doesn't have a wc import
+	// uncomment it to run on the playground.
 }
 
 /*
