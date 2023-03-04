@@ -1,47 +1,42 @@
 package main
 
-import (
-	"fmt"
-	// "golang.org/x/tour/tree"
-	// these imports don't work locally, will run on the Go playground
-)
-
-func New(k int) *tree.Tree {
-	if k == 0 {
-		return nil
-	}
-	return &tree.Tree{New(k - 1), k, New(k - 1)}
-}
+// import "golang.org/x/tour/tree"
+import "fmt"
 
 func Walk(t *tree.Tree, ch chan int) {
-	if t == nil {
-		return
+	tree := t
+	ch <- tree.Value
+	if tree.Left != nil {
+		Walk(tree.Left, ch)
 	}
-	Walk(t.Left, ch)
-	ch <- t.Value
-	close(ch)
-	Walk(t.Right, ch)
+	if tree.Right != nil {
+		Walk(tree.Right, ch)
+	}
 }
 
+// Same determines whether the trees
+// t1 and t2 contain the same values.
 func Same(t1, t2 *tree.Tree) bool {
-	if t1 == nil && t2 == nil {
-		return true
-	} else if t1 == nil || t2 == nil {
-		return false
-	} else if t1.Value != t2.Value {
-		return false
-	} else {
-		return Same(t1.Left, t2.Left) && Same(t1.Right, t2.Right)
+	ch1 := make(chan int)
+	ch2 := make(chan int)
+	go Walk(t1, ch1)
+	go Walk(t2, ch2)
+	for i := 0; i < 10; i++ {
+		if <-ch1 != <-ch2 {
+			return false
+		}
 	}
+	return true
 }
 
 func main() {
+	// test the Walk function
 	ch := make(chan int)
-	go Walk(New(3), ch)
+	go Walk(tree.New(1), ch)
 	for i := 0; i < 10; i++ {
 		fmt.Println(<-ch)
 	}
-
-	fmt.Println("Same(New(1), New(1)):", Same(New(1), New(1))) // should be true
-	fmt.Println("Same(New(1), New(2)):", Same(New(1), New(2))) // should be false
+	// test the Same function
+	fmt.Println(Same(tree.New(1), tree.New(1)))
+	fmt.Println(Same(tree.New(1), tree.New(2)))
 }
