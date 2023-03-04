@@ -14,6 +14,6 @@ func (r MyReader) Read(b []byte) (int, error) {
 }
 
 func main() {
-	reader.Validate(MyReader{})
+	// reader.Validate(MyReader{})
 	// got the "OK!" message, works as intended.
 }
