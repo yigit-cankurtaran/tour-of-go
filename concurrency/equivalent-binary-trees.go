@@ -4,14 +4,12 @@ package main
 import "fmt"
 
 func Walk(t *tree.Tree, ch chan int) {
-	tree := t
-	ch <- tree.Value
-	if tree.Left != nil {
-		Walk(tree.Left, ch)
+	if t == nil {
+		return
 	}
-	if tree.Right != nil {
-		Walk(tree.Right, ch)
-	}
+	Walk(t.Left, ch)
+	ch <- t.Value
+	Walk(t.Right, ch)
 }
 
 // Same determines whether the trees
